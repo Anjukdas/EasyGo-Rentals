@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f8fafc;
+}
+#root, body, html {
+  height: 100vh; 
+  overflow: hidden; /* <--- DELETE THIS LINE */
+}

@@ -1,0 +1,10 @@
+.home-container {
+  padding: 20px;
+}
+
+.cars-grid {
+display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;   /* 👈 important */
+  align-content: flex-start;
+  gap: 20px;}

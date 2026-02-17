@@ -1,0 +1,68 @@
+const cars = [
+  {
+    id: 1,
+    name: "Toyota Fortuner",
+    category: "SUV",
+    pricePerDay: 3500,
+    seats: 7,
+    fuel: "Diesel",
+  },
+  {
+    id: 2,
+    name: "Hyundai Verna",
+    category: "Sedan",
+    pricePerDay: 2500,
+    seats: 5,
+    fuel: "Petrol",
+  },
+  {
+    id: 3,
+    name: "Maruti Swift",
+    category: "Hatchback",
+    pricePerDay: 1800,
+    seats: 5,
+    fuel: "Petrol",
+  },
+  {
+    id: 4,
+    name: "Honda City",
+    category: "Sedan",
+    pricePerDay: 2200,
+    seats: 5,
+    fuel: "Diesel",
+  },
+  {
+    id: 5,
+    name: "Hyundai Creta",
+    category: "SUV",
+    pricePerDay: 2600,
+    seats: 5,
+    fuel: "Petrol",
+  },
+  {
+    id: 6,
+    name: "Kia Seltos",
+    category: "SUV",
+    pricePerDay: 2700,
+    seats: 5,
+    fuel: "Petrol",
+  },
+  {
+    id: 7,
+    name: "Wagner",
+    category: "SUV",
+    pricePerDay: 2600,
+    seats: 5,
+    fuel: "Petrol",
+  },
+  {
+    id: 8,
+    name: "Kia Seltros",
+    category: "SUV",
+    pricePerDay: 2700,
+    seats: 5,
+    fuel: "Petrol",
+  },
+];
+
+export default cars;
