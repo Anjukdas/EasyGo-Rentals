@@ -1,26 +1,23 @@
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar.jsx";
-import Home from "./pages/Home.jsx";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Booking from "./pages/Booking.jsx";
-import Payment from "./pages/Payment.jsx";
-
+import Cars from "./pages/Cars";
+import Home from "./pages/Home";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/booking" element={<Booking />} />
-        {/* <Route path="/confirm_booking" element={<Confirm_Booking />} /> */}
-        <Route path="/payment" element={<Payment />} />
-
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/cars"
+        element={
+          <ProtectedRoute>
+            <Cars />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
 
