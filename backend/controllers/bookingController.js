@@ -118,7 +118,8 @@ export const payBooking = async (req, res) => {
 export const cancelBooking = async (req, res) => {
   try {
 
-    const booking = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id)
+    .populate("car");
 
     if (!booking) {
       return res.status(404).json({
@@ -143,5 +144,17 @@ export const cancelBooking = async (req, res) => {
     res.status(500).json({
       message: error.message
     });
+  }
+};
+
+export const getmybookingById = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id).populate("car");
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+    res.json(booking);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
