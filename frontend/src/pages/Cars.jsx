@@ -1,9 +1,11 @@
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Cars() {
   const [cars, setCars] = useState([]);   // store cars
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -37,7 +39,9 @@ function Cars() {
           >
             <h3>{car.name}</h3>
             <p>Price per day: ₹{car.pricePerDay}</p>
-            <button>Book Now</button>
+            <button onClick={() => navigate(`/booking/${car._id}`)}>
+              Book Now
+            </button>
           </div>
         ))
       )}

@@ -11,10 +11,16 @@ function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Save search data temporarily
+    // ✅ Convert dates to ISO strings before saving
+    const pickupISO = new Date(pickupDate).toISOString();
+    const returnISO = new Date(returnDate).toISOString();
+    
+
     localStorage.setItem("location", location);
-    localStorage.setItem("pickupDate", pickupDate);
-    localStorage.setItem("returnDate", returnDate);
+    // localStorage.setItem("pickupDate", pickupISO);
+    // localStorage.setItem("returnDate", returnISO);
+    localStorage.setItem("pickupDate", new Date(pickupISO).toISOString());
+localStorage.setItem("returnDate", new Date(returnISO).toISOString());
 
     const token = localStorage.getItem("token");
 
@@ -58,7 +64,9 @@ function Home() {
           />
         </div>
 
-        <button type="submit">Pick Your Wheels</button>
+        <button type="submit" style={{ marginTop: "10px", padding: "10px 20px" }}>
+          Pick Your Wheels
+        </button>
       </form>
     </div>
   );
