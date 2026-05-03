@@ -1,4 +1,6 @@
 import Car from "../models/Car.js";
+import Booking from "../models/Booking.js";
+
 
 // @desc    Create new car (Admin)
 // @route   POST /api/cars
@@ -14,12 +16,35 @@ export const createCar = async (req, res) => {
 // @desc    Get all cars (Public)
 export const getCars = async (req, res) => {
   try {
-    const cars = await Car.find();
+    const { pickupDate, dropDate } = req.query;
+
+    let cars = await Car.find();
+
+    if (pickupDate && dropDate) {
+
+      // Find bookings overlapping selected dates
+      const bookings = await Booking.find({
+        $or: [
+          {
+            pickupDate: { $lte: new Date(dropDate) },
+            dropDate: { $gte: new Date(pickupDate) }
+          }
+        ]
+      });
+
+      const bookedCarIds = bookings.map(b => b.car.toString());
+
+      // Filter available cars
+      cars = cars.filter(car => !bookedCarIds.includes(car._id.toString()));
+    }
+
     res.json(cars);
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // @desc    Get single car (Public)
 // @route   GET /api/cars/:id

@@ -5,6 +5,11 @@ import Car from "../models/Car.js";
 export const createBooking = async (req, res) => {
   try {
     const { carId, pickupDate, dropDate } = req.body;
+     if (!carId || !pickupDate || !dropDate) {
+      return res.status(400).json({
+        message: "Car ID, pickup date and drop date are required"
+      });
+    }
 
     // Check car exists
     const car = await Car.findById(carId);
@@ -119,7 +124,7 @@ export const cancelBooking = async (req, res) => {
   try {
 
     const booking = await Booking.findById(req.params.id)
-    .populate("car");
+      .populate("car");
 
     if (!booking) {
       return res.status(404).json({

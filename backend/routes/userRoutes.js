@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get("/", protect, admin, getUsers);
 
+
+
 export default router;
