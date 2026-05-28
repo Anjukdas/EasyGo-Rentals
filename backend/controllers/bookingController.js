@@ -1,23 +1,28 @@
+import dotenv from "dotenv";
+dotenv.config();
 import Booking from "../models/Booking.js";
 import Car from "../models/Car.js";
+import Stripe from "stripe";
 
-// CREATE BOOKING
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// CREATE BOOKING WITH STRIPE CHECKOUT
 export const createBooking = async (req, res) => {
   try {
     const { carId, pickupDate, dropDate } = req.body;
-     if (!carId || !pickupDate || !dropDate) {
+    if (!carId || !pickupDate || !dropDate) {
       return res.status(400).json({
         message: "Car ID, pickup date and drop date are required"
       });
     }
 
-    // Check car exists
+    // 1. Check car exists
     const car = await Car.findById(carId);
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
 
-    // Check overlapping bookings
+    // 2. Check overlapping bookings
     const overlappingBooking = await Booking.findOne({
       car: carId,
       $or: [
@@ -34,14 +39,14 @@ export const createBooking = async (req, res) => {
       });
     }
 
-    // Calculate total price
+    // 3. Calculate total price
     const days =
       (new Date(dropDate).getTime() - new Date(pickupDate).getTime()) /
       (1000 * 60 * 60 * 24);
 
     const totalPrice = days * car.pricePerDay;
 
-    // Create booking
+    // 4. Create booking in Database (Status: Pending)
     const booking = new Booking({
       user: req.user._id,
       car: carId,
@@ -53,16 +58,38 @@ export const createBooking = async (req, res) => {
 
     await booking.save();
 
+    // 5. Create Stripe Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items: [
+        {
+          price_data: {
+            currency: 'aed', 
+            product_data: {
+              name: `${car.brand} ${car.name}`, 
+              description: `Booking from ${pickupDate} to ${dropDate}`,
+            },
+            unit_amount: totalPrice * 100, 
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: `http://localhost:5174/success?bookingId=${booking._id}`,
+      cancel_url: `http://localhost:5174/cancel`,
+    });
+
     res.status(201).json({
-      message: "Booking successful",
+      message: "Booking initiated. Complete payment to confirm.",
       booking,
+      stripeSessionId: session.id,
+      stripeUrl: session.url 
     });
 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // GET MY BOOKINGS
 export const getMyBookings = async (req, res) => {
@@ -94,7 +121,6 @@ export const getAllBookings = async (req, res) => {
   }
 };
 
-
 // PAY BOOKING
 export const payBooking = async (req, res) => {
   try {
@@ -119,6 +145,7 @@ export const payBooking = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 // CANCEL BOOKING
 export const cancelBooking = async (req, res) => {
   try {
