@@ -1,26 +1,23 @@
+import HeroSearch from "../components/HeroSearch";
+import HeroTitle from "../components/HeroTitle";
+
 
 const Home = () => {
   return (
-    <div>
+    <div >
       {/* Hero Section */}
       <section
-        className="h-screen bg-cover bg-center flex items-center justify-center"
+        className="h-screen bg-cover bg-center flex-col items-center justify-center "
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
         }}
-      >
-        <div className="bg-black/50 p-8 rounded-lg text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">
-            Drive Your Dream Car
-          </h1>
-          <p className="text-lg mb-6">
-            Rent premium cars at affordable prices.
-          </p>
-          <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold">
-            Browse Cars
-          </button>
-        </div>
+      ><div >
+        <HeroTitle/>
+        <HeroSearch />
+
+      </div>
+        
       </section>
 
       {/* Featured Cars */}
