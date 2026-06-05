@@ -1,5 +1,16 @@
 
+import { useNavigate } from "react-router-dom";
+
 const CarCard = ({ car }) => {
+  const navigate = useNavigate();
+
+
+
+   const handleBookNow = () => {
+     console.log("Car object:", car);
+  console.log("Car ID:", car._id);
+    navigate(`/booking/${car._id}`);
+  };  
   return (
     <div className="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition duration-300">
 
@@ -20,7 +31,8 @@ const CarCard = ({ car }) => {
           ₹ {car.pricePerDay} / day
         </p>
 
-        <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+        <button onClick={handleBookNow}
+        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
           Book Now
         </button>
       </div>
