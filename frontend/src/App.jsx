@@ -5,6 +5,8 @@ import BookingPage from "./pages/BookingPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
+
 
 
 
@@ -21,6 +23,7 @@ function App() {
         <Route path="/cars" element={<Cars />} />
         <Route path="/booking/:id" element={<BookingPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
 
         {/* AUTH */}
         <Route path="/register" element={<Register />} />
