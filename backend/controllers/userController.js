@@ -21,3 +21,32 @@ export const getProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const update_profile = async(req,res) => {
+  console.log(req.body);
+console.log(req.file);
+  try {
+      const userId = req.user.id;
+
+      const updatedData = {
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address,
+      };
+
+      if (req.file) {
+        updatedData.profilePic =
+          `http://localhost:5000/uploads/${req.file.filename}`;
+      }
+
+      const user = await User.findByIdAndUpdate(
+        userId,
+        updatedData,
+        { new: true }
+      );
+
+      res.json(user);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+}
