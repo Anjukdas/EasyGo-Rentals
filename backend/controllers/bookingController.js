@@ -65,25 +65,25 @@ export const createBooking = async (req, res) => {
       line_items: [
         {
           price_data: {
-            currency: 'aed', 
+            currency: 'aed',
             product_data: {
-              name: `${car.brand} ${car.name}`, 
+              name: `${car.brand} ${car.name}`,
               description: `Booking from ${pickupDate} to ${dropDate}`,
             },
-            unit_amount: totalPrice * 100, 
+            unit_amount: totalPrice * 100,
           },
           quantity: 1,
         },
       ],
-      success_url: `http://localhost:5174/success?bookingId=${booking._id}`,
-      cancel_url: `http://localhost:5174/cancel`,
+      success_url: `http://localhost:5173/payment-success?bookingId=${booking._id}`,
+      cancel_url: `http://localhost:5173/cancel`,
     });
 
     res.status(201).json({
       message: "Booking initiated. Complete payment to confirm.",
       booking,
       stripeSessionId: session.id,
-      stripeUrl: session.url 
+      stripeUrl: session.url
     });
 
   } catch (error) {
@@ -94,6 +94,7 @@ export const createBooking = async (req, res) => {
 // GET MY BOOKINGS
 export const getMyBookings = async (req, res) => {
   try {
+    console.log("USER:", req.user);
     const bookings = await Booking.find({ user: req.user._id })
       .populate("car", "name brand pricePerDay image")
       .sort({ createdAt: -1 });
@@ -101,6 +102,7 @@ export const getMyBookings = async (req, res) => {
     res.json(bookings);
 
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -146,6 +148,60 @@ export const payBooking = async (req, res) => {
   }
 };
 
+export const payBookingSession = async (req, res) => {
+  try {
+
+    const booking =
+      await Booking.findById(req.params.id)
+        .populate("car");
+
+    if (!booking) {
+      return res.status(404).json({
+        message: "Booking not found",
+      });
+    }
+
+    const session =
+      await stripe.checkout.sessions.create({
+
+        payment_method_types: ["card"],
+
+        mode: "payment",
+
+        line_items: [
+          {
+            price_data: {
+              currency: "aed",
+
+              product_data: {
+                name: booking.car.name,
+              },
+
+              unit_amount:
+                booking.totalPrice * 100,
+            },
+
+            quantity: 1,
+          },
+        ],
+
+        success_url:
+          `http://localhost:5173/payment-success?bookingId=${booking._id}`,
+
+        cancel_url:
+          `http://localhost:5173/cancel`,
+      });
+
+    res.json({
+      stripeUrl: session.url,
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 // CANCEL BOOKING
 export const cancelBooking = async (req, res) => {
   try {

@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const BookingPage = () => {
     const { id } = useParams();
+      const navigate = useNavigate();
+
 
     const [car, setCar] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -10,6 +14,8 @@ const BookingPage = () => {
     // ✅ NEW: date states
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
+
+    const [isAvailable, setIsAvailable] = useState(true);
 
     useEffect(() => {
         const fetchCar = async () => {
@@ -28,26 +34,57 @@ const BookingPage = () => {
 
         fetchCar();
     }, [id]);
+    useEffect(() => {
+        const checkAvailability = async () => {
+            if (!fromDate || !toDate) return;
+
+            try {
+                const res = await fetch(
+                    `http://localhost:5000/api/cars/available?pickupDate=${fromDate}&dropDate=${toDate}`
+                );
+
+                const data = await res.json();
+
+                const found = data.cars.some((c) => c._id === id);
+
+                setIsAvailable(found);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        checkAvailability();
+    }, [fromDate, toDate, id]);
 
     const handleBooking = () => {
-        if (!fromDate || !toDate) {
-            alert("Please select booking dates");
-            return;
-        }
+  if (!fromDate || !toDate) {
+    alert("Please select booking dates");
+    return;
+  }
 
-        if (new Date(fromDate) > new Date(toDate)) {
-            alert("From date cannot be greater than To date");
-            return;
-        }
+  if (!isAvailable) {
+    alert("Car not available for selected dates");
+    return;
+  }
 
-        console.log("Booking Details:", {
-            car,
-            fromDate,
-            toDate,
-        });
 
-        alert("Booking successful!");
-    };
+  console.log({
+    car,
+    fromDate,
+    toDate,
+    totalPrice,
+  });
+   navigate("/confirm-booking", {
+    state: {
+      car,
+      fromDate,
+      toDate,
+      totalPrice,
+    },
+  });
+
+  
+};
 
     if (loading) {
         return <p className="text-center mt-10">Loading...</p>;
@@ -56,6 +93,20 @@ const BookingPage = () => {
     if (!car) {
         return <p className="text-center mt-10">Car not found</p>;
     }
+    const calculateDays = () => {
+        if (!fromDate || !toDate) return 0;
+
+        const start = new Date(fromDate);
+        const end = new Date(toDate);
+
+        const diffTime = end - start;
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+        return diffDays + 1;
+    };
+
+    const totalDays = calculateDays();
+    const totalPrice = totalDays * (car?.pricePerDay || 0);
 
     return (
         <div className="container mx-auto p-6">
@@ -93,6 +144,13 @@ const BookingPage = () => {
                     <p className="text-green-600 font-bold text-xl mt-4">
                         ₹ {car.pricePerDay} / day
                     </p>
+                    <p className="text-lg font-semibold mt-4">
+                        Total Days: {calculateDays()}
+                    </p>
+
+                    <p className="text-xl font-bold text-blue-600">
+                        Total Price: ₹ {totalPrice}
+                    </p>
                     {/* 📅 Booking Dates Section */}
                     <div className="mt-6">
                         <h3 className="text-lg font-semibold mb-3">
@@ -123,10 +181,12 @@ const BookingPage = () => {
                     </div>
 
                     <p
-                        className={`mt-2 font-semibold ${car.available ? "text-green-500" : "text-red-500"
+                        className={`mt-2 font-semibold ${isAvailable ? "text-green-500" : "text-red-500"
                             }`}
                     >
-                        {car.available ? "Available" : "Not Available"}
+                        {isAvailable
+                            ? "Available for selected dates"
+                            : "Not available for selected dates"}
                     </p>
 
                     <button

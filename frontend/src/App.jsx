@@ -6,6 +6,10 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
+import ConfirmBooking from "./pages/ConfirmBooking"
+import PaymentSuccess from "./pages/PaymentSuccess";
+import MyBookings from "./pages/MyBookings";
+
 
 
 
@@ -24,6 +28,11 @@ function App() {
         <Route path="/booking/:id" element={<BookingPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/confirm-booking" element={<ConfirmBooking />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
+
+        
 
         {/* AUTH */}
         <Route path="/register" element={<Register />} />

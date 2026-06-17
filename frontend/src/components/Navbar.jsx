@@ -101,7 +101,7 @@ const Navbar = () => {
 
           {user && (
             <Link
-              to="/bookings"
+              to="/my-bookings"
               className="hover:text-blue-600"
             >
               My Bookings

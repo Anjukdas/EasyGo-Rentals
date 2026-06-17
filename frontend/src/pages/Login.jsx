@@ -1,8 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+
 
 const Login = () => {
-    const navigate = useNavigate();
+
+    // const navigate = useNavigate();
+    // 1. URL search params edukkunnu
+    const [searchParams] = useSearchParams();
+    const redirectUrl = searchParams.get("redirect") || "/"; // 👈 'redirect' param illeghil '/' (home) aavum fallback
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -33,8 +39,9 @@ const Login = () => {
             localStorage.setItem("user", JSON.stringify(data.user));
 
             alert("Login successful");
-            navigate("/");
-            window.location.reload();
+          // 2. RedirectUrl-lekk nere vidunnu (with full page reload to refresh auth state)
+            window.location.href = redirectUrl;
+            // window.location.reload();
         } catch (err) {
             console.log(err);
         }
