@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import AdminLayout from "./pages/admin/AdminLayout";
 import Home from "./pages/Home";
 import Cars from "./pages/Cars";
 import BookingPage from "./pages/BookingPage";
@@ -9,6 +10,10 @@ import EditProfile from "./pages/EditProfile";
 import ConfirmBooking from "./pages/ConfirmBooking"
 import PaymentSuccess from "./pages/PaymentSuccess";
 import MyBookings from "./pages/MyBookings";
+import Dashboard from "./pages/admin/Dashboard";
+import AdminCars from "./pages/admin/AdminCars";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminBookings from "./pages/admin/AdminBookings";
 
 
 
@@ -31,6 +36,15 @@ function App() {
         <Route path="/confirm-booking" element={<ConfirmBooking />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/my-bookings" element={<MyBookings />} />
+        <Route path="/admin" element={<AdminLayout />}>
+  <Route index element={<Dashboard />} />
+  <Route path="cars" element={<AdminCars />} />
+  <Route path="/admin/users" element={<AdminUsers />}/>
+  <Route path="bookings"  element={<AdminBookings />} />
+</Route>
+
+        
+
 
         
 

@@ -1,16 +1,40 @@
 import Car from "../models/Car.js";
 import Booking from "../models/Booking.js";
+import { upload } from "../middleware/upload.js";
 
 
 
 // @desc    Create new car (Admin)
 // @route   POST /api/cars
+// export const createCar = async (req, res) => {
+//   try {
+//     const car = await Car.create(req.body);
+//     res.status(201).json(car);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
+
+
+
 export const createCar = async (req, res) => {
   try {
-    const car = await Car.create(req.body);
-    res.status(201).json(car);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+    const imageUrl = req.file
+      ? `http://localhost:5000/uploads/${req.file.filename}`
+      : "";
+
+    const car = new Car({
+      name: req.body.name,
+      brand: req.body.brand,
+      category: req.body.category,
+      pricePerDay: req.body.pricePerDay,
+      image: imageUrl,
+    });
+
+    await car.save();
+    res.json(car);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -61,15 +85,47 @@ export const getCarById = async (req, res) => {
 
 // @desc    Update car (Admin)
 // @route   PUT /api/cars/:id
+// export const updateCar = async (req, res) => {
+//   try {
+//     const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+//       new: true,
+//     });
+//     if (!car) return res.status(404).json({ message: "Car not found" });
+//     res.json(car);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
+
+
 export const updateCar = async (req, res) => {
   try {
-    const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+    const { id } = req.params;
+
+    const imageUrl = req.file
+      ? `http://localhost:5000/uploads/${req.file.filename}`
+      : undefined;
+
+    const updatedData = {
+      name: req.body.name,
+      brand: req.body.brand,
+      category: req.body.category,
+      fuel: req.body.fuel,
+      seats: req.body.seats,
+      pricePerDay: req.body.pricePerDay,
+    };
+
+    if (imageUrl) {
+      updatedData.image = imageUrl;
+    }
+
+    const car = await Car.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
-    if (!car) return res.status(404).json({ message: "Car not found" });
+
     res.json(car);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 

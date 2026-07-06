@@ -6,7 +6,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import path from "path";
 
-
+import adminRoutes from "./routes/adminRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import carRoutes from "./routes/carsRoutes.js";
@@ -29,13 +29,14 @@ app.get("/", (req, res) => {
   res.send("Car Rental Backend Running 🚗");
 });
 
+app.use("/api/admin",adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use('/uploads',express.static(path.join(path.resolve(),'uploads')));
 
-// app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 
 
 

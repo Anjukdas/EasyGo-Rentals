@@ -246,3 +246,77 @@ export const getmybookingById = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// ADMIN UPDATE BOOKING STATUS
+
+export const updateBookingStatus = async(req,res)=>{
+
+try{
+
+const booking = await Booking.findById(req.params.id);
+
+
+if(!booking){
+return res.status(404).json({
+message:"Booking not found"
+});
+}
+
+
+booking.bookingStatus = req.body.status;
+
+
+await booking.save();
+
+
+res.json({
+message:"Booking status updated",
+booking
+});
+
+
+}catch(error){
+
+res.status(500).json({
+message:error.message
+});
+
+}
+
+};
+
+
+
+// ADMIN DELETE BOOKING
+
+export const deleteBookingAdmin = async(req,res)=>{
+
+try{
+
+const booking = await Booking.findById(req.params.id);
+
+
+if(!booking){
+return res.status(404).json({
+message:"Booking not found"
+});
+}
+
+
+await booking.deleteOne();
+
+
+res.json({
+message:"Booking deleted"
+});
+
+
+}catch(error){
+
+res.status(500).json({
+message:error.message
+});
+
+}
+
+};
