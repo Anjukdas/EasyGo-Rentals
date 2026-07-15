@@ -39,8 +39,13 @@ const Login = () => {
             localStorage.setItem("user", JSON.stringify(data.user));
 
             alert("Login successful");
-          // 2. RedirectUrl-lekk nere vidunnu (with full page reload to refresh auth state)
-            window.location.href = redirectUrl;
+            // Admin → Admin Dashboard
+            if (data.user.role === "admin") {
+                window.location.href = "/admin";
+            } else {
+                // Normal user
+                window.location.href = redirectUrl;
+            }
             // window.location.reload();
         } catch (err) {
             console.log(err);

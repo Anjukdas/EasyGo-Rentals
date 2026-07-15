@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const carSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    brand:{ type:String, required:true},
     category: { type: String, required: true }, // SUV, Sedan
     pricePerDay: { type: Number, required: true },
     seats: { type: Number },

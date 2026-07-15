@@ -110,8 +110,8 @@ export const updateCar = async (req, res) => {
       name: req.body.name,
       brand: req.body.brand,
       category: req.body.category,
-      fuel: req.body.fuel,
-      seats: req.body.seats,
+      fuel: req.body.fuel || "Petrol",
+      seats: req.body.seats || 5,
       pricePerDay: req.body.pricePerDay,
     };
 
