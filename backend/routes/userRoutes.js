@@ -1,6 +1,6 @@
 import express from "express";
 import { protect, admin } from "../middleware/authMiddleware.js";
-import { getUsers, getProfile ,update_profile,updateUserRole,deleteUser} from "../controllers/userController.js"; // ✅ Correct controller
+import { getUsers, getProfile ,update_profile,updateUserRole,deleteUser,createUser} from "../controllers/userController.js"; // ✅ Correct controller
 import upload from '../middleware/upload.js'
 
 const router = express.Router();
@@ -14,6 +14,7 @@ router.put(
   update_profile
 );
 
+router.post("/", protect, admin, createUser);
 router.put("/:id/role", protect, admin, updateUserRole);
 router.delete("/:id", protect, admin, deleteUser);
 
