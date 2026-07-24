@@ -73,7 +73,7 @@ const ConfirmBooking = () => {
                 {/* Image */}
                 <img
                     src={car.image}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64 object-contain"
                 />
 
                 <div className="p-6">

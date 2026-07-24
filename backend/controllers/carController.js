@@ -103,7 +103,7 @@ export const updateCar = async (req, res) => {
     const { id } = req.params;
 
     const imageUrl = req.file
-      ? `http://localhost:5000/uploads/${req.file.filename}`
+      ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
       : undefined;
 
     const updatedData = {

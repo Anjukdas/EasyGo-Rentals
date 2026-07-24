@@ -17,7 +17,7 @@ const CarCard = ({ car }) => {
       <img
         src={`${car.image}`}
         alt={car.name}
-        className="h-52 w-full object-cover"
+        className="h-52 w-full object-contain"
       />
 
       <div className="p-4">
