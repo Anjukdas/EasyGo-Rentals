@@ -22,7 +22,7 @@ const AdminCars = () => {
 
     const fetchCars = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/cars");
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cars`);
             setCars(res.data);
         } catch (err) {
             console.log(err);
@@ -54,7 +54,7 @@ const AdminCars = () => {
             formData.append("image", form.image); // file
 
             await axios.post(
-                "http://localhost:5000/api/cars",
+                "${import.meta.env.VITE_API_URL}/api/cars",
                 formData,
                 {
                     headers: {
@@ -83,7 +83,7 @@ const AdminCars = () => {
 
         try {
             await axios.delete(
-                `http://localhost:5000/api/cars/${id}`,
+                `${import.meta.env.VITE_API_URL}/api/cars/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

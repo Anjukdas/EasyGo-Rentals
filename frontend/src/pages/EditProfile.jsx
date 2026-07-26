@@ -40,7 +40,7 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await fetch(
-      "http://localhost:5000/api/users/update_profile",
+      `${import.meta.env.VITE_API_URL}/api/users/update_profile`,
       {
         method: "PUT",
         headers: {

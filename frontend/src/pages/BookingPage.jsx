@@ -21,7 +21,7 @@ const BookingPage = () => {
         const fetchCar = async () => {
             try {
                 const res = await fetch(
-                    `http://localhost:5000/api/cars/${id}`
+                    `${import.meta.env.VITE_API_URL}/api/cars/${id}`
                 );
                 const data = await res.json();
                 setCar(data);
@@ -40,7 +40,7 @@ const BookingPage = () => {
 
             try {
                 const res = await fetch(
-                    `http://localhost:5000/api/cars/available?pickupDate=${fromDate}&dropDate=${toDate}`
+                    `${import.meta.env.VITE_API_URL}/api/cars/available?pickupDate=${fromDate}&dropDate=${toDate}`
                 );
 
                 const data = await res.json();

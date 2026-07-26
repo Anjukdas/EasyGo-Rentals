@@ -17,7 +17,7 @@ const AdminUsers = () => {
     const addUser = async () => {
         try {
             await axios.post(
-                "http://localhost:5000/api/users",
+                `${import.meta.env.VITE_API_URL}/api/users`,
                 newUser,
                 {
                     headers: {
@@ -47,7 +47,7 @@ const AdminUsers = () => {
         try {
 
             const res = await axios.get(
-                "http://localhost:5000/api/users",
+                `${import.meta.env.VITE_API_URL}/api/users`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ const AdminUsers = () => {
         if (!window.confirm("Delete this user?")) return;
 
         await axios.delete(
-            `http://localhost:5000/api/users/${id}`,
+            `${import.meta.env.VITE_API_URL}/api/users/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -85,7 +85,7 @@ const AdminUsers = () => {
     const changeRole = async (id, role) => {
 
         await axios.put(
-            `http://localhost:5000/api/users/${id}/role`,
+            `${import.meta.env.VITE_API_URL}/api/users/${id}/role`,
             { role },
             {
                 headers: {

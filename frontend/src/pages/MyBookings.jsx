@@ -14,7 +14,7 @@ const MyBookings = () => {
                 const token = localStorage.getItem("token");
 
                 const res = await axios.get(
-                    "http://localhost:5000/api/bookings/",
+                    `${import.meta.env.VITE_API_URL}/api/bookings/`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ localStorage.getItem("token");
 
 const res =
 await fetch(
-`http://localhost:5000/api/bookings/${bookingId}/pay-session`,
+`${import.meta.env.VITE_API_URL}/api/bookings/${bookingId}/pay-session`,
 {
 method: "POST",
 

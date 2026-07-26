@@ -14,7 +14,7 @@ const AdminBookings = () => {
     try {
 
       const res = await axios.get(
-        "http://localhost:5000/api/bookings/admin/all",
+        `${import.meta.env.VITE_API_URL}/api/bookings/admin/all`,
         {
           headers:{
             Authorization:`Bearer ${token}`
@@ -49,7 +49,7 @@ const AdminBookings = () => {
 
       await axios.put(
 
-        `http://localhost:5000/api/bookings/admin/${id}/status`,
+        `${import.meta.env.VITE_API_URL}/api/bookings/admin/${id}/status`,
 
         {
           status
@@ -89,7 +89,7 @@ const AdminBookings = () => {
 
       await axios.delete(
 
-        `http://localhost:5000/api/bookings/admin/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/bookings/admin/${id}`,
 
         {
           headers:{

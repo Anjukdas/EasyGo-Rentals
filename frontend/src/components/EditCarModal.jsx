@@ -58,7 +58,7 @@ const EditCarModal = ({
       }
 
       const res = await fetch(
-        `http://localhost:5000/api/cars/${car._id}`,
+        `${import.meta.env.VITE_API_URL}/api/cars/${car._id}`,
         {
           method: "PUT",
           headers: {
