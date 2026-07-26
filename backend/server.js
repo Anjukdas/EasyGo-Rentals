@@ -1,6 +1,7 @@
 
 import dotenv from "dotenv";
 dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import connectDB from "./config/db.js";
@@ -15,13 +16,13 @@ import bookingRoutes from "./routes/bookingRoutes.js"
 
 connectDB();
 
-
 const app = express();
 
 
 app.use(cors());
 app.use(express.json());
 
+app.use('/uploads',express.static(path.join(path.resolve(),'uploads')));
 
 
 
@@ -34,9 +35,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/bookings", bookingRoutes);
-app.use('/uploads',express.static(path.join(path.resolve(),'uploads')));
 
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
 
 
