@@ -20,7 +20,7 @@ import { upload } from "../middleware/upload.js";
 export const createCar = async (req, res) => {
   try {
     const imageUrl = req.file
-      ? `http://localhost:5000/uploads/${req.file.filename}`
+      ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
       : "";
 
     const car = new Car({
