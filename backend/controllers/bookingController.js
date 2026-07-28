@@ -75,8 +75,8 @@ export const createBooking = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `http://localhost:5173/payment-success?bookingId=${booking._id}`,
-      cancel_url: `http://localhost:5173/cancel`,
+      success_url: `${process.env.FRONTEND_URL}/payment-success?bookingId=${booking._id}`,
+      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     });
 
     res.status(201).json({
