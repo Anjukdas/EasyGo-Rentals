@@ -33,6 +33,8 @@ const token =
 localStorage.getItem(
 "token"
 );
+console.log("Token:", token);
+console.log("BookingId:", bookingId);
 
 if(
 !bookingId
@@ -54,6 +56,9 @@ Authorization:
 }
 }
 );
+if (!res.ok) {
+  throw new Error(`HTTP ${res.status}`);
+}
 
 const data =
 await res.json();

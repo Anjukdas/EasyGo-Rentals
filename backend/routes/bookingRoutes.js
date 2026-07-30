@@ -34,9 +34,9 @@ router.put("/:id/pay", protect, payBooking);
 
 router.delete("/:id", protect, cancelBooking);
 
-router.get("/:id", protect, getmybookingById);
-
 router.get("/admin/all", protect, admin, getAllBookings);
+
+router.get("/:id", protect, getmybookingById);
 
 // ADMIN UPDATE STATUS
 router.put("/admin/:id/status",protect,admin,updateBookingStatus);
