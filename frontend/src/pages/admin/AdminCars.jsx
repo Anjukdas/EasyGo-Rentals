@@ -54,7 +54,7 @@ const AdminCars = () => {
             formData.append("image", form.image); // file
 
             await axios.post(
-                "${import.meta.env.VITE_API_URL}/api/cars",
+                `${import.meta.env.VITE_API_URL}/api/cars`,
                 formData,
                 {
                     headers: {
