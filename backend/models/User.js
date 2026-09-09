@@ -16,25 +16,44 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    verificationToken: {
+      type: String,
+    },
+
+    verificationTokenExpire: {
+      type: Date,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+
+    resetPasswordExpire: {
+      type: Date,
+    },
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
-      phone: {
-    type: String,
-    default: ""
-  },
+    phone: {
+      type: String,
+      default: ""
+    },
 
-  address: {
-    type: String,
-    default: ""
-  },
+    address: {
+      type: String,
+      default: ""
+    },
 
-  profilePic: {
-    type: String,
-    default: ""
-  }
+    profilePic: {
+      type: String,
+      default: ""
+    }
   },
   { timestamps: true }
 );

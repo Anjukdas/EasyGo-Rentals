@@ -1,12 +1,10 @@
-
-import dotenv from "dotenv";
-dotenv.config();
-
+import "./config/env.js";
 import express from "express";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import path from "path";
 
+import testEmailRoutes from "./routes/testEmailRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -30,11 +28,14 @@ app.get("/", (req, res) => {
   res.send("Car Rental Backend Running 🚗");
 });
 
+
 app.use("/api/admin",adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/test-email", testEmailRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/bookings", bookingRoutes);
+
 
 // app.use("/uploads", express.static("uploads"));
 
