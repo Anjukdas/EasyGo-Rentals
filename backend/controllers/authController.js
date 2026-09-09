@@ -226,47 +226,47 @@ export const resetPassword = async (req, res) => {
 
   }
 };
-export const resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+// export const resetPassword = async (req, res) => {
+//   const { token } = req.params;
+//   const { password } = req.body;
 
-  try {
+//   try {
 
-    const user = await User.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpire: { $gt: Date.now() },
-    });
-
-
-    if (!user) {
-      return res.status(400).json({
-        message: "Invalid or expired reset link",
-      });
-    }
+//     const user = await User.findOne({
+//       resetPasswordToken: token,
+//       resetPasswordExpire: { $gt: Date.now() },
+//     });
 
 
-    const salt = await bcrypt.genSalt(10);
-
-    user.password = await bcrypt.hash(password, salt);
-
-
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpire = undefined;
+//     if (!user) {
+//       return res.status(400).json({
+//         message: "Invalid or expired reset link",
+//       });
+//     }
 
 
-    await user.save();
+//     const salt = await bcrypt.genSalt(10);
+
+//     user.password = await bcrypt.hash(password, salt);
 
 
-    res.json({
-      message: "Password reset successful",
-    });
+//     user.resetPasswordToken = undefined;
+//     user.resetPasswordExpire = undefined;
 
 
-  } catch (error) {
+//     await user.save();
 
-    res.status(500).json({
-      message: error.message,
-    });
 
-  }
-};
+//     res.json({
+//       message: "Password reset successful",
+//     });
+
+
+//   } catch (error) {
+
+//     res.status(500).json({
+//       message: error.message,
+//     });
+
+//   }
+// };
