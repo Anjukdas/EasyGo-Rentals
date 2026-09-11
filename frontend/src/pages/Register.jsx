@@ -12,6 +12,7 @@ const Register = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -65,18 +66,29 @@ const Register = () => {
                 alert(data.message || "Registration failed");
                 return;
             }
+            // Clear previous email verification status
+            sessionStorage.removeItem("emailVerified");
 
-            alert("Register successful");
-            navigate("/login");
+            setSuccessMessage(
+                "Registration successful! Please check your email and verify your account before logging in."
+            );
 
         } catch (err) {
             console.log(err);
+            alert("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
         }
 
     };
 
     return (
         <div className="flex items-center justify-center h-screen">
+            {successMessage && (
+                <div className="mb-4 rounded-lg bg-green-100 border border-green-300 text-green-700 px-4 py-3">
+                    {successMessage}
+                </div>
+            )}
             <form onSubmit={handleRegister} className="p-6 bg-white shadow-lg rounded-lg w-96">
                 <h2 className="text-2xl font-bold mb-4">Register</h2>
 
@@ -134,14 +146,14 @@ const Register = () => {
                     </p>
                 )}
 
-               
+
 
                 <button
                     type="submit"
                     disabled={loading}
                     className={`w-full py-2 rounded-lg text-white font-semibold transition duration-200 ${loading
-                            ? "bg-green-400 cursor-not-allowed"
-                            : "bg-green-600 hover:bg-green-700"
+                        ? "bg-green-400 cursor-not-allowed"
+                        : "bg-green-600 hover:bg-green-700"
                         }`}
                 >
                     {loading ? (

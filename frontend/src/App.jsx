@@ -14,6 +14,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import AdminCars from "./pages/admin/AdminCars";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminBookings from "./pages/admin/AdminBookings";
+import VerifyEmail from "./pages/VerifyEmail";
 
 
 
@@ -51,6 +52,7 @@ function App() {
         {/* AUTH */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
 
       </Routes>
     </>
