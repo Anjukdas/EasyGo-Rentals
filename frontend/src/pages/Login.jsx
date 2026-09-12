@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const Login = () => {
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     // 1. URL search params edukkunnu
     const [searchParams] = useSearchParams();
     const redirectUrl = searchParams.get("redirect") || "/"; // 👈 'redirect' param illeghil '/' (home) aavum fallback
@@ -124,6 +124,15 @@ const Login = () => {
                         {errors.password}
                     </p>
                 )}
+                <div className="text-right mb-4">
+                    <button
+                        type="button"
+                        onClick={() => navigate("/forgot-password")}
+                        className="text-blue-600 hover:underline text-sm"
+                    >
+                        Forgot Password?
+                    </button>
+                </div>
 
 
 
@@ -131,8 +140,8 @@ const Login = () => {
                     type="submit"
                     disabled={loading}
                     className={`w-full py-2 rounded-lg text-white font-semibold transition duration-200 ${loading
-                            ? "bg-green-400 cursor-not-allowed"
-                            : "bg-green-600 hover:bg-green-700"
+                        ? "bg-green-400 cursor-not-allowed"
+                        : "bg-green-600 hover:bg-green-700"
                         }`}
                 >
                     {loading ? (
