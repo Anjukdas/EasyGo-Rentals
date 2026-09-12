@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import transporter from "../config/mail.js";
+import resend from "../config/mail.js";
 import { welcomeEmail } from "../templates/welcomeEmail.js";
 import { verifyEmail as verifyEmailTemplate } from "../templates/verifyEmail.js";
 import { resetPasswordEmail } from "../templates/resetPassword.js";
@@ -40,8 +40,8 @@ export const registerUser = async (req, res) => {
     //   html: welcomeEmail(newUser.name),
     // });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    await resend.emails.send({
+      from: "EasyGo Rentals <onboarding@resend.dev>",
       to: newUser.email,
       subject: "Verify your EasyGo Rentals account",
       html: verifyEmailTemplate(newUser.name, verificationUrl),
@@ -161,8 +161,8 @@ export const forgotPassword = async (req, res) => {
       `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    await resend.emails.send({
+      from: "EasyGo Rentals <onboarding@resend.dev>",
       to: user.email,
       subject: "Reset your EasyGo Rentals password",
       html: resetPasswordEmail(user.name, resetUrl),
