@@ -40,12 +40,21 @@ export const registerUser = async (req, res) => {
     //   html: welcomeEmail(newUser.name),
     // });
 
-    await resend.emails.send({
-      from: "EasyGo Rentals <onboarding@resend.dev>",
-      to: newUser.email,
-      subject: "Verify your EasyGo Rentals account",
-      html: verifyEmailTemplate(newUser.name, verificationUrl),
-    });
+    const { data, error } = await resend.emails.send({
+  from: "EasyGo Rentals <onboarding@resend.dev>",
+  to: [newUser.email],
+  subject: "Verify your EasyGo Rentals account",
+  html: verifyEmailTemplate(newUser.name, verificationUrl),
+});
+
+if (error) {
+  console.error("Resend error:", error);
+  return res.status(500).json({
+    message: error.message || "Verification email could not be sent",
+  });
+}
+
+console.log("Resend email sent:", data);
 
     // Generate token
     const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
