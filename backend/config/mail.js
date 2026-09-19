@@ -1,23 +1,7 @@
-// import nodemailer from "nodemailer";
+import { BrevoClient } from "@getbrevo/brevo";
 
+const brevo = new BrevoClient({
+  apiKey: process.env.BREVO_API_KEY,
+});
 
-// console.log("Mail User:", process.env.EMAIL_USER);
-// console.log("Mail Pass:", process.env.EMAIL_PASS ? "Loaded" : "Missing");
-
-// const transporter = nodemailer.createTransport({
-//     service: "gmail",
-//     host: "smtp.gmail.com",
-//     port: 587,
-//     secure: false,
-//     auth: {
-//         user: process.env.EMAIL_USER,
-//         pass: process.env.EMAIL_PASS,
-//     },
-// });
-
-// export default transporter;
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export default resend;
+export default brevo;
