@@ -1,13 +1,19 @@
-export default function HeroTitle() {
+export default function  HeroTitle (){
   return (
-    <div className="text-center mt-10 md:mt-20">
-      <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
-        Luxury Cars on Rent
+    <div className="text-center px-4">
+      <h1 className="text-4xl md:text-5xl font-bold">
+        <span className="text-white">
+          Luxury{" "}
+        </span>
+
+        <span className="text-amber-300">
+          Cars on Rent
+        </span>
       </h1>
 
-      <p className="text-gray-500 mt-3">
+      <p className="text-white mt-2 text-sm md:text-base">
         Book premium cars instantly at best prices
       </p>
     </div>
   );
-}
+};

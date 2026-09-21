@@ -7,17 +7,22 @@ const Home = () => {
     <div >
       {/* Hero Section */}
       <section
-        className="h-screen bg-cover bg-center flex-col items-center justify-center "
+        className=" relative min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center justify-start pt-24 pb-10"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70')",
         }}
-      ><div >
-        <HeroTitle/>
-        <HeroSearch />
+      > {/* Overlay - background image-inte mukalil */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-600/60 via-gray-500/20 to-transparent"></div>
 
-      </div>
-        
+        {/* Content - overlay-inte mukalil */}
+        <div className="relative z-10 w-full">
+
+          <HeroTitle />
+          <HeroSearch />
+
+        </div>
+
       </section>
 
       {/* Featured Cars */}
