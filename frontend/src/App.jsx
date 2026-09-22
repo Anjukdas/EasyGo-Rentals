@@ -40,16 +40,16 @@ function App() {
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/admin" element={<AdminLayout />}>
-  <Route index element={<Dashboard />} />
-  <Route path="cars" element={<AdminCars />} />
-  <Route path="/admin/users" element={<AdminUsers />}/>
-  <Route path="bookings"  element={<AdminBookings />} />
-</Route>
-
-        
+          <Route index element={<Dashboard />} />
+          <Route path="cars" element={<AdminCars />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="bookings" element={<AdminBookings />} />
+        </Route>
 
 
-        
+
+
+
 
         {/* AUTH */}
         <Route path="/register" element={<Register />} />
