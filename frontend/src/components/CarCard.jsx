@@ -4,13 +4,21 @@ import { useNavigate } from "react-router-dom";
 const CarCard = ({ car }) => {
   const navigate = useNavigate();
 
+  const handleBookNow = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please login first to book a car!");
 
+      navigate(
+        `/login?redirect=${encodeURIComponent(`/booking/${car._id}`)}`
+      );
 
-   const handleBookNow = () => {
-     console.log("Car object:", car);
-  console.log("Car ID:", car._id);
+      return;
+    }
+    console.log("Car object:", car);
+    console.log("Car ID:", car._id);
     navigate(`/booking/${car._id}`);
-  };  
+  };
   return (
     <div className="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition duration-300">
 
@@ -32,7 +40,7 @@ const CarCard = ({ car }) => {
         </p>
 
         <button onClick={handleBookNow}
-        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
           Book Now
         </button>
       </div>
